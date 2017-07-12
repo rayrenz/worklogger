@@ -1,0 +1,81 @@
+import datetime
+import pytz
+
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import views, login, logout, authenticate
+from django.utils import timezone
+
+from .forms import LoginForm, LogForm
+from .models import Project, Log
+
+
+def index(request):
+    if request.user.is_authenticated() and request.user.is_active:
+        if request.method == 'POST':
+            date = request.POST['date']
+            if date != '':
+                request.session['log_date'] = date
+                return redirect('log:logs')
+        return render(request, 'worklogger/index.html')
+
+    return HttpResponseRedirect(reverse('log:login'))
+
+
+def login_view(request):
+    if request.method == 'GET':
+        form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('log:index'))
+    return render(request, 'worklogger/login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('log:index'))
+
+
+def logs(request):
+    date = (datetime.datetime.strptime(str(request.session['log_date']), "%Y-%m-%d").date())
+    if request.method == 'POST':
+        project_id = request.POST['project']
+        project = Project.objects.filter(id=int(project_id))[0]
+        mylog = Log()
+        mylog.project = project
+        mylog.remarks = request.POST['remarks']
+        mylog.date_logged = timezone.make_aware(datetime.datetime.combine(date, timezone.now().time()))
+        mylog.late = is_late(date)
+        mylog.user = request.user
+        mylog.log_hours = request.POST['log_hours']
+        mylog.save()
+        return HttpResponseRedirect(reverse('log:logs'))
+    else:
+        form = LogForm()
+        logs = Log.objects.filter(
+            user=request.user,
+            date_logged__day=date.day,
+            date_logged__month=date.month,
+            date_logged__year=date.year
+        ).order_by('-date_logged')
+
+        total = 0
+        for log in logs:
+            total += log.log_hours
+
+        return render(request, 'worklogger/logs.html', {
+            'form': form,
+            'logs': logs,
+            'total': total,
+            'date': date,
+        })
+
+
+def is_late(date):
+    return datetime.datetime.today().date() > date

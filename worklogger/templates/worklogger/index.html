@@ -1,0 +1,18 @@
+{% extends 'worklogger/base.html' %}
+
+{% block content %}
+    <form action="{% url 'log:index' %}" method="post">
+    {% csrf_token %}
+        <div class="form-group">
+            Pick a date:<input type="text" name="date" id="datepicker">
+            <input type="submit" value="Open Log">
+        </div>
+    </form>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker({
+              dateFormat: "yy-mm-dd"
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,22 @@
+#late {
+    color: red;
+}
+
+form div .total {
+    font-size: 10px;
+}
+
+tr.log-head {
+    background-color: #000000;
+    color: white;
+}
+
+ul.errorlist {
+    list-style-type: none;
+    color: #740006;
+    padding: 0;
+}
+
+div.user {
+    padding-left: 30px;
+}

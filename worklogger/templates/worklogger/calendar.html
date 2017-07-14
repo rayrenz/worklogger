@@ -1,0 +1,24 @@
+    <div class="calendar">
+        <div class="month">
+            <button class="prev"><span class="glyphicon glyphicon-chevron-left"></span></button>
+            <button class="next"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <div class="current_month">January</div>
+            <div class="current_year">2017</div>
+        </div>
+        <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        <form action="{% url 'log:index' %}" method="post">
+            {% csrf_token %}
+            <input type="datetime" name="date" class="logdate" hidden>
+            <div class="dates">
+            </div>
+        </form>
+    </div>
+

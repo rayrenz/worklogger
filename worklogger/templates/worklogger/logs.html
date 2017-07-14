@@ -1,51 +1,56 @@
 {% extends 'worklogger/base.html' %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8">
+  <div class="col-sm-5">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="panel-title">Log Form</div>
+      </div>
+      <div class="panel-body">
         <form action="{% url 'log:logs' %}" method="post">
         {% csrf_token %}
-            <div class="form-group">
-                <label>{{ form.log_hours.label_tag }}</label>
-                {{ form.log_hours }}
+          <div class="form">
+            <div class="form-group row">
+                <div class="col-sm-3 col-md-3"><label>{{ form.log_hours.label_tag }}</label></div>
+                <div class="col-sm-9 col-md-9">{{ form.log_hours }}{{ form.log_hours.errors }}</div>
             </div>
-            <div class="form-group">
-                <label>{{ form.project.label_tag }}</label>
-                {{ form.project }}
+            <div class="form-group row">
+                <div class="col-sm-3 col-md-3"><label>{{ form.project.label_tag }}</label></div>
+                <div class="col-sm-9 col-md-9">{{ form.project }}{{ form.project.errors }}</div>
             </div>
-            <div class="form-group">
-                <label>{{ form.remarks.label_tag }}</label>
-                {{ form.remarks }}
+            <div class="form-group row">
+                <div class="col-sm-3 col-md-3"><label>{{ form.remarks.label_tag }}</label></div>
+                <div class="col-sm-9 col-md-9">{{ form.remarks }}{{ form.remarks.errors }}</div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Add Log">
+            <div class="form-group row">
+                <div class="col-sm-offset-3 col-sm-9"><input class="btn btn-primary" type="submit" value="Add Log"></div>
             </div>
+          </div>
         </form>
+        <div class="panel-footer total col-sm-12">
+          Total Log Hours for {{ date }}: {{ total }} hour{{ total | pluralize }}
         </div>
-    </div>
+      </div>
 
-    <div class="row">
-        Total Log Hours for {{ date }}: {{ total }} hour{{ total | pluralize }}
     </div>
+  </div>
 
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
-                <tr class="table-head">
-                    <td>Duration</td>
-                    <td>Project</td>
-                    <td>Remarks</td>
-                </tr>
-            </thead>
-            <tbody>
-            {% for log in logs %}
-                <tr{% if log.late %} id="late"{% endif %}>
-                    <td>{{ log.log_hours }} hour{{ log.log_hours | pluralize:',s' }}</td>
-                    <td>{{ log.project }}</td>
-                    <td>{{ log.remarks }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <table class="table table-striped">
+    <thead>
+      <tr class="table-head log-head">
+          <td>Duration</td>
+          <td>Project</td>
+          <td>Remarks</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in logs %}
+        <tr{% if log.late %} id="late"{% endif %}>
+            <td>{{ log.log_hours }} hour{{ log.log_hours | pluralize:',s' }}</td>
+            <td>{{ log.project }}</td>
+            <td>{{ log.remarks }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

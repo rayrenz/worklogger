@@ -3,20 +3,30 @@
 {% load staticfiles %}
 <head>
     <meta charset="UTF-8">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.css">
+    <!-- Latest compiled and minified bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <!-- optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled bootstrap js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <!-- web fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Anton"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald" />
+    <!-- my own customized css and js -->
+    <link href="{% static 'worklogger/mystyle.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'worklogger/myscript.js' %}"></script>
+    <!-- files for my calendar -->
+    <link href="{% static 'worklogger/calendar_style.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'worklogger/calendar_script.js' %}"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'worklogger/style.css' %}">
     <title>Worklogger</title>
 </head>
 
@@ -50,10 +60,10 @@
 
 {% if user.is_authenticated %}
 <div class="row" style="padding-left: 20px">
-        <h3>Hello {{ user }}!</h3>
+  <div class="user"><h3><span class="glyphicon glyphicon-user">&nbsp;</span>Hello {{ user }}!</h3></div>
 </div>
 {% endif %}
-
+<div class="container-fluid">
 {% block content %}
 {% endblock %}
 </div>

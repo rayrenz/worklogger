@@ -9,8 +9,8 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class LogAdmin(admin.ModelAdmin):
-    fields = ['user', 'project', 'log_hours', 'date_logged']
-    list_display = ['project', 'user', 'log_hours', 'date_logged']
+    fields = ['user', 'project', 'log_hours', 'remarks', 'date_logged', 'created']
+    list_display = ['project', 'user', 'remarks', 'log_hours', 'date_logged', 'created']
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Log, LogAdmin)

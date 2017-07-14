@@ -45,7 +45,7 @@
     </thead>
     <tbody>
       {% for log in logs %}
-        <tr{% if log.late %} id="late"{% endif %}>
+        <tr{% if log.created.date > log.date_logged.date %} id="late"{% endif %}>
             <td>{{ log.log_hours }} hour{{ log.log_hours | pluralize:',s' }}</td>
             <td>{{ log.project }}</td>
             <td>{{ log.remarks }}</td>

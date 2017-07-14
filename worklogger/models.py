@@ -1,5 +1,7 @@
+import pytz
+from datetime import datetime
+
 from django.db import models
-from django.utils import timezone
 
 
 class Project(models.Model):
@@ -15,6 +17,5 @@ class Log(models.Model):
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
     log_hours = models.FloatField(blank=False)
     remarks = models.CharField(max_length=200, null=True)
-    date_logged = models.DateTimeField(blank=False)
-    created = models.DateTimeField(default=timezone.now())
-    late = models.BooleanField(default=False)
+    date_logged = models.DateField(blank=False)
+    created = models.DateTimeField(default=datetime.now(pytz.UTC))

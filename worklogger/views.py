@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
@@ -47,7 +47,8 @@ def logout_view(request):
 
 
 def logs(request):
-    date = (datetime.datetime.strptime(str(request.session['log_date']), "%Y-%m-%d").date())
+    # convert the text format date to a date object
+    date = (datetime.strptime(request.session['log_date'], "%Y-%m-%d").date())
     if request.method == 'POST':
         # get the form and its values
         form = LogForm(request.POST)
@@ -57,8 +58,7 @@ def logs(request):
             mylog = Log()
             mylog.project = project
             mylog.remarks = request.POST['remarks']
-            mylog.date_logged = timezone.make_aware(datetime.datetime.combine(date, timezone.now().time()))
-            mylog.late = is_late(date)
+            mylog.date_logged = date
             mylog.user = request.user
             mylog.log_hours = request.POST['log_hours']
             mylog.save()
@@ -85,7 +85,3 @@ def logs(request):
         'total': total,
         'date': date,
     })
-
-
-def is_late(date):
-    return datetime.datetime.today().date() > date

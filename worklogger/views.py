@@ -33,6 +33,8 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                if user.is_staff:
+                    return HttpResponseRedirect(reverse('admin:index'))
                 return HttpResponseRedirect(reverse('log:index'))
             message = 'Invalid username/password!'
     else:

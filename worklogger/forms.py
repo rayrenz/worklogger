@@ -1,7 +1,4 @@
 from django import forms
-from django.contrib.auth import models
-
-from bootstrap3_datetime.widgets import DateTimePicker
 
 from .models import Project
 
@@ -12,7 +9,7 @@ class LoginForm(forms.Form):
 
 
 class LogForm(forms.Form):
-    log_hours = forms.IntegerField()
+    log_hours = forms.FloatField()
     project = forms.ModelChoiceField(queryset=Project.objects.all(), widget=forms.Select(
         attrs={'class': 'form-control'}))
     remarks = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'form-control'}))

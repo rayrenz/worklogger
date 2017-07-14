@@ -1,10 +1,9 @@
 import datetime
-import pytz
 
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import views, login, logout, authenticate
+from django.http import HttpResponseRedirect
+from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
 
 from .forms import LoginForm, LogForm

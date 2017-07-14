@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'worklogger',
-    'bootstrap3_datetime',
 )
 
 MIDDLEWARE_CLASSES = (
